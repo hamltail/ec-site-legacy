@@ -22,6 +22,12 @@ USER ruby
 
 COPY --chown=ruby:ruby Gemfile* ./
 RUN bundle install
+# スペックの低い PC で bundle install がタイムアウトする場合は、
+# 上の「RUN bundle install」を以下に置き換えてください。
+#
+# RUN bundle config set retry 10 \
+#   && bundle config set jobs 1 \
+#   && bundle install
 
 COPY --chown=ruby:ruby package.json *yarn* ./
 RUN yarn install
